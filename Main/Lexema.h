@@ -6,14 +6,15 @@ using namespace std;
 
 enum TypeElement {
 	Operation,
-	Value
+	Value, 
+	Null
 };
 
 class Lexema {
 	string str;
 	TypeElement type;
 public:
-	Lexema(string _str, TypeElement _type) : str(_str), type(_type) {};
+	Lexema(string _str = " ", TypeElement _type = Null) : str(_str), type(_type) {};
 	string getStr() { return str; }
 	TypeElement getType() { return type; }
 	friend ostream& operator << (ostream& out, Lexema& p) {
@@ -34,7 +35,7 @@ Queue <Lexema> lex(string input) {
 	input += ' ';
 	int i = 0;
 	string tmp = "";
-	string op = "+-*()";
+	string op = "+-*/()";
 	string sep = " \n\t";
 	int state = 0;
 	for (i = 0; i < input.size(); i++) {
