@@ -34,7 +34,7 @@ public:
     void Push(T x) {
         if (Is_Full())
         {
-            ReMem();
+            Relocate();
         }
         end = next(end);
         arr[end] = x;
@@ -48,17 +48,31 @@ public:
         start = next(start);
         return v;
     }
-    void ReMem()
+    //void ReMem()//-
+    //{
+    //    T* arr2 = new T[size * 2];
+    //    for (size_t i = 1; i < size; i++)
+    //    {
+    //        arr2[i] = arr[next(end)];
+    //        end = next(end);
+    //    }
+    //    delete[] arr;
+    //    arr = arr2;
+    //    size *= 2;
+    //}
+
+    void Relocate()
     {
         T* arr2 = new T[size * 2];
-        end = 0;
-        for (size_t i = 1; i < size; i++)
+        if (start > end)
         {
-            arr2[i] = arr[next(end)];
-            end = next(end);
+            start = size*2- (size - start);
+            size_t i = size - start;
+            while (i > 0)
+            {
+                arr2[size * 2 - i] = arr[size - i];
+                i++;
+            }
         }
-        delete[] arr;
-        arr = arr2;
-        size *= 2;
     }
 };
