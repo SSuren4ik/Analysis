@@ -12,17 +12,20 @@ int main()
     cout << str;
     Queue <Lexema> lex_res;
     lex_res = lex(str);
-    cout <<lex_res;
+    cout <<lex_res << endl;
     vector <Lexema> polka;
-    polka = Reverse_Polska(lex_res);
+    try
+    {
+        polka = Reverse_Polska(lex_res);
+    }
+    catch(exception ex)
+    {
+        cout << ex.what();
+        return 0;
+    }
+    for (int i = 0; i < polka.size(); i++)
+    {
+        cout << polka[i] << endl;
+    }
     return 0;
 }
-
-/*
-        Queue <int> q(5);
-    for (int i = 0; i < 5; i++)
-    {
-        q.Push(i);
-    }
-    cout<< q;
-*/

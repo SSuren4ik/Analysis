@@ -54,6 +54,10 @@ public:
     }
     T Top()
     {
+        if (IsEmpty())
+        {
+            throw exception("Stack is empty");
+        }
         return arr[top];
     }
     bool IsEmpty() 
