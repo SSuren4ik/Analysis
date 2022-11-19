@@ -6,13 +6,13 @@ template<typename T>
 class Stack
 {
 private:
-    size_t top;
+    int top;
     size_t size;
     T* arr;
 public:
-    Stack(size_t sz)
+    Stack(size_t sz=1)
     {
-        if (sz <= 0)
+        if (sz < 0)
         {
             throw exception();
         }
@@ -26,7 +26,7 @@ public:
         size = st.size;
         copy(st.arr, st.arr + size, arr);
     }
-    T Size()
+    size_t Size()
     {
         return top + 1;
     }
@@ -52,15 +52,32 @@ public:
         top--;
         return v;
     }
-    bool IsEmpty() const
+    T Top()
+    {
+        return arr[top];
+    }
+    bool IsEmpty() 
     {
         return top == -1;
     }
-    bool IsFull() const
+    bool IsFull() 
     {
         return top == size - 1;
     }
-    Stack()
+    friend ostream& operator <<(ostream& out, Stack<T>& st)
+    {
+        if (st.IsEmpty())
+        {
+            out << "Stack is Empty!" << endl;
+            return out;
+        }
+        for (int i = 0; i<st.Size(); i++)
+        {
+            out << st.arr[i] << " ";
+        }
+        return out;
+    }
+    ~Stack()
     {
         delete[] arr;
     }

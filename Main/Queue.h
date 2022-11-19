@@ -8,7 +8,7 @@ private:
     size_t end;
     T* arr;
     size_t size;//размер буфера
-    size_t next(size_t i) { return ((i + 1) % size); }
+    size_t next(size_t i) const { return ((i + 1) % size); }
 
     void Relocate()
     {
@@ -41,7 +41,6 @@ public:
         arr = new T[size]{};
         for (int i = start; i != next(end); i = next(i)) {
             arr[i] = q.arr[i];
-            cout << arr[i] << endl;
         }
     }
     Queue<T>& operator=(const Queue<T>& q) {
@@ -59,20 +58,35 @@ public:
         return *this;
     }
 
-    bool Is_Empty()
+    bool Is_Empty() const
     {
         if (next(end) == start)
             return true;
         return false;
     }
-    bool Is_Full() {
+    bool Is_Full() const
+    {
         if (next(next(end)) == start)
         {
             return true;
         }
         return false;
     }
-    void Push(T x) {
+    int Get_Size() const
+    {
+        int size = 0;
+        for (int i = start; i != next(end); i = next(i))
+        {
+            size++;
+        }
+        return size;
+    }
+    T Get_Element(int i) 
+    {
+        return arr[i];
+    }
+    void Push(T x)
+    {
         if (Is_Full())
         {
             Relocate();

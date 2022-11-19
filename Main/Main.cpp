@@ -8,11 +8,13 @@ using namespace std;
 
 int main() 
 {
-    string str = "( 123 -10)/ 50 *	\t	30\n";
+    string str = "(123+10*2-1)/20\n";
     cout << str;
     Queue <Lexema> lex_res;
     lex_res = lex(str);
     cout <<lex_res;
+    vector <Lexema> polka;
+    polka = Reverse_Polska(lex_res);
     return 0;
 }
 
