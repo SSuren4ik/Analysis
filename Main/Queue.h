@@ -22,7 +22,7 @@ private:
         delete[] arr;
         arr = arr2;
         end = size - 1;
-        size *= size;
+        size *= 2;
         start = 1;
     }
 public:
@@ -33,9 +33,30 @@ public:
         end = 0;
         start = next(end);
     }
-    Queue(const Queue<T>& q)
+    Queue(const Queue<T>& q) 
     {
-
+        size = q.size;
+        end = q.end;
+        start = q.start;
+        arr = new T[size]{};
+        for (int i = start; i != next(end); i = next(i)) {
+            arr[i] = q.arr[i];
+            cout << arr[i] << endl;
+        }
+    }
+    Queue<T>& operator=(const Queue<T>& q) {
+        if (this == &q)
+            return *this;
+        if (size > 0)
+            delete[]arr;
+        size = q.size;
+        end = q.end;
+        start = q.start;
+        arr = new T[size]{};
+        for (int i = start; i != next(end); i = next(i)) {
+            arr[i] = q.arr[i];
+        }
+        return *this;
     }
 
     bool Is_Empty()
@@ -58,10 +79,11 @@ public:
         }
         end = next(end);
         arr[end] = x;
-    }
-    T Top()
-    {
-        return arr[start];
+        //for (int i = start; i != next(end); i = next(i))
+        //{
+        //    cout << arr[i] << endl;
+        //}
+        //cout << endl;
     }
     T Pop() {
         if (Is_Empty())
@@ -76,7 +98,7 @@ public:
     {
         if (q.Is_Empty())
         {
-            out << "Queue is Empty!\n";
+            out << "Queue is Empty!" << endl;
             return out;
         }
         for (int i = q.start; i != q.next(q.end); i= q.next(i))
