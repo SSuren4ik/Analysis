@@ -117,7 +117,7 @@ vector <Lexema> Reverse_Polska(Queue<Lexema> & q)
 					stack.Push(l);
 					break;
 				}
-				priority1 = op.find(c)/2;
+				priority1 = op.find(c) / 2;
 				while (!stack.IsEmpty())
 				{
 					priority2 = op.find(stack.Top().getStr()) / 2;
@@ -127,10 +127,10 @@ vector <Lexema> Reverse_Polska(Queue<Lexema> & q)
 					}
 					else
 					{
-						stack.Push(l);
 						break;
 					}
 				}
+				stack.Push(l);
 				break;
 			case ')':
 				while (true)
@@ -152,7 +152,6 @@ vector <Lexema> Reverse_Polska(Queue<Lexema> & q)
 					{
 						throw exception("Net (");
 					}
-
 				}
 			}
 			break;
@@ -170,4 +169,59 @@ vector <Lexema> Reverse_Polska(Queue<Lexema> & q)
 		throw exception("Net )");
 	}
 	return res;
+}
+
+double String_double(string& st)
+{
+	double ch = 0;
+	int razr = 1;
+	for (int i = st.size() - 1; i >= 0; i--)
+	{
+		ch += (st[i]-48) * razr;
+		razr *= 10;
+	}
+	return ch;
+}
+
+
+double Calculate(vector<Lexema>& vc)
+{
+	Stack<double> stack;
+	int i = 0;
+	double op1;
+	double op2;
+	while (i < vc.size())
+	{
+		if (vc[i].getType() == Value)
+		{
+			stack.Push(String_double(vc[i].getStr()));
+		}
+		else
+		{
+			if (stack.Size() >= 2)
+			{
+				op2 = stack.Pop();
+				op1 = stack.Pop();
+				char c = vc[i].getStr()[0];
+				switch (c)
+				{
+				case '+':stack.Push(op1 + op2);
+					break;
+				case '-':stack.Push(op1 - op2);
+					break;
+				case '*':stack.Push(op1 * op2);
+					break;
+				case '/':stack.Push(op1 / op2);
+					break;
+				}
+			}
+			else
+			{
+				throw exception("Data is incorrect");
+			}
+		}
+		i++;
+		//cout << i<< "  "<< stack << endl;
+	}
+	return stack.Pop();
 }
