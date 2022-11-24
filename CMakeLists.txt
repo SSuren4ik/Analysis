@@ -5,5 +5,5 @@ project(${PROJECT_NAME})
 
 # BUILD
 add_subdirectory(Main)
-#add_subdirectory(gtest)
-#add_subdirectory(test)
+add_subdirectory(gtest)
+add_subdirectory(test)
