@@ -75,7 +75,7 @@ public:
             out << "Stack is Empty!" << endl;
             return out;
         }
-        for (int i = 0; i<st.Size(); i++)
+        for (int i = 0; i<st.top; i++)
         {
             out << st.arr[i] << " ";
         }

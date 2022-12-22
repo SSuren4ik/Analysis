@@ -15,8 +15,9 @@ enum TypeElement {
 class Lexema {
 	string str;
 	TypeElement type;
+	int index;
 public:
-	Lexema(string _str = " ", TypeElement _type = Null) : str(_str), type(_type) {};
+	Lexema(string _str = " ", TypeElement _type = Null, int _index = 0) : str(_str), type(_type), index(_index){};
 	string getStr() { return str; }
 	TypeElement getType() { return type; }
 	friend ostream& operator << (ostream& out, Lexema& p) {
@@ -54,7 +55,7 @@ Queue <Lexema> lex(string input) {
 			fres = op.find(c);
 			if (fres >= 0) {
 				tmp = c;
-				Lexema l(tmp, Operation);
+				Lexema l(tmp, Operation, i+1);
 				res.Push(l);
 				state = 0;
 				break;
@@ -71,7 +72,7 @@ Queue <Lexema> lex(string input) {
 				Lexema l1(tmp, Value);
 				res.Push(l1);
 				tmp = c;
-				Lexema l2(tmp, Operation);
+				Lexema l2(tmp, Operation, i+1);
 				res.Push(l2);
 				state = 0;
 				break;
@@ -97,6 +98,7 @@ vector <Lexema> Reverse_Polska(Queue<Lexema> & q)
 	int priority2;
 	string op = "+-/*";
 	Stack<Lexema> stack;
+	Stack <int> index;
 	char c;
 	for (int i = 1; i < q.Get_Size()+1; i++)
 	{
@@ -109,7 +111,7 @@ vector <Lexema> Reverse_Polska(Queue<Lexema> & q)
 			{
 			case '(':
 				stack.Push(l);
-				number_skobka++;
+				index.Push(i);
 				break;
 			case '+':case '-':case'*':case'/':
 				if (stack.IsEmpty())
@@ -144,13 +146,13 @@ vector <Lexema> Reverse_Polska(Queue<Lexema> & q)
 						else
 						{
 							stack.Pop();
-							number_skobka--;
+							index.Pop();
 							break;
 						}
 					}
 					else
 					{
-						throw exception("Net (");
+						throw i;
 					}
 				}
 			}
@@ -164,9 +166,14 @@ vector <Lexema> Reverse_Polska(Queue<Lexema> & q)
 	{
 		res.push_back(stack.Pop());
 	}
-	if (number_skobka != 0)
+	//for (int i = 0; i < res.size(); i++)
+	//{
+	//	cout << res[i];
+	//}
+	if (!index.IsEmpty())
 	{
-		throw exception("Net )");
+		char c = index.Pop();
+		throw c;
 	}
 	return res;
 }

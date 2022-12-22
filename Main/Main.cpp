@@ -8,7 +8,7 @@ using namespace std;
 
 int main() 
 {
-    string str = "(123 + 10 * 2 - 3)/ 20\n";
+    string str = "(((123 + 10 * 2 - 3)/ 20\n";
     cout << str;
     Queue <Lexema> lex_res;
     lex_res = lex(str);
@@ -19,9 +19,14 @@ int main()
     {
         polka = Reverse_Polska(lex_res);
     }
-    catch(exception ex)
+    catch(int ex)
     {
-        cout << ex.what();
+        cout << "Net ( for " << ex << " lexem" << endl;
+        return 0;
+    }
+    catch (char ex)
+    {
+        cout << "Net ( for " << int(ex) << " lexem" << endl;
         return 0;
     }
     try
